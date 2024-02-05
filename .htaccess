@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+# Yandex and Google redirect to new website:
+RewriteCond %{HTTP_USER_AGENT} Yandex* [OR]
+RewriteCond %{HTTP_USER_AGENT} Google*
+RewriteCond %{HTTP_HOST} !^new-domain\.ru$
+RewriteCond %{REQUEST_URI} !^/yandex
+RewriteCond %{REQUEST_URI} !^/google
+RewriteRule ^(.*)$ https://new-domain.ru/$1 [R=permanent,L]
+# Show everyone else 404:
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.* /404.php [L]
+</IfModule>
